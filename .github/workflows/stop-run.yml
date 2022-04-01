@@ -26,5 +26,5 @@ jobs:
           elif [ "$RUN_HOURS" > "${{ secrets.RUN_DURATION }}" ]
           then
             echo "Run duration has exceeded crossed threhold: ${RUN_DURATION} Run is being Stopped"
-            # grid stop run ${{ secrets.RUN_NAME }}
+            grid stop run ${{ secrets.RUN_NAME }}
           fi
