@@ -1,14 +1,9 @@
 name: 'Grid.ai Stop Run'
 on:
-  workflow_dispatch:
-    inputs:
-      run_name:
-        required: true
-        default:  "c$(date '+%y%m%d-%H%M%S')"
-        type: string
-      run_time:
-        required: true
-        type: int
+  schedule:
+    # Runs "at 10pm" (see https://crontab.guru)
+    # Please remove the # to activate the cron
+   - cron: '5 * * * *'
 jobs:
   gridai-actions:
     runs-on: ubuntu-latest
@@ -28,7 +23,7 @@ jobs:
           if [ "$RUN_STATUS" != "running" ]
           then
              echo "Run is not running"
-          elif [ "$RUN_HOURS" = "${{ secrets.RUN_DURATION }}" ]
+          elif [ "$RUN_HOURS" > "${{ secrets.RUN_DURATION }}" ]
           then
             echo "Run duration has exceeded crossed threhold: ${RUN_DURATION} Run is being Stopped"
             # grid stop run ${{ secrets.RUN_NAME }}
