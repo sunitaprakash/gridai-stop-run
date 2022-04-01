@@ -1,4 +1,4 @@
-name: 'Grid.ai Terminate Run'
+name: 'Grid.ai Stop Run'
 on:
   workflow_dispatch:
     inputs:
