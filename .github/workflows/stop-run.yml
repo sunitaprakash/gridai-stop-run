@@ -20,7 +20,7 @@ jobs:
           gridai-key: ${{ secrets.GRIDAI_KEY }}        
       - name: get-run-status
         run: |
-          export COLUMNS=512
+          export COLUMNS=${ stty cols }
           # run name is truncated within github action due to screen size.  make it short
           export RUN_STATUS=$(grid status ${{  secrets.RUN_NAME }} |  awk '{print $2 "," $6}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 )
           echo "RUN_STATUS $RUN_STATUS"
