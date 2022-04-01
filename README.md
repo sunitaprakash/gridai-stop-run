@@ -11,17 +11,7 @@ This action performs the following:
 To stop a Run in cron fashion. Below is stop-run.yml. 
 
 ```
-jobs:
-  gridai-actions:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: gridai-actions/gridai-login@v0
-        with:
-          gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
-          gridai-key: ${{ secrets.GRIDAI_KEY }}
-      - run: |
-          grid session pause ${{ secrets.SESSION_NAME }} 
+
 ```
 
 
@@ -29,7 +19,7 @@ jobs:
 The repository requires the below secrets. See the offical [documentation](https://github.com/Azure/actions-workflow-samples/blob/master/assets/create-secrets-for-GitHub-workflows.md) for a walkthrough on creating secrets for GitHub workflows.
 - GRIDAI_KEY 
 - GRIDAI_USERNAME 
-- RUN_NAME (has to be short)
+- RUN_NAME (run name is truncated within github action due to screen size.  make it short)
 - RUN_DURATION
 
 
