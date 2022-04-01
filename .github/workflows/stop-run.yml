@@ -1,0 +1,46 @@
+name: 'Grid.ai Terminate Run'
+on:
+  workflow_dispatch:
+    inputs:
+      run_name:
+        required: true
+        default:  "c$(date '+%y%m%d-%H%M%S')"
+        type: string
+      run_time:
+        required: true
+        type: int
+jobs:
+  gridai-actions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gridai-actions/gridai-login@v0
+        with:
+          gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
+          gridai-key: ${{ secrets.GRIDAI_KEY }}        
+      - name: get-run-status
+        run: |
+          export RUN_STATUS=$(grid status ${{  secrets.RUN_NAME }} |  awk '{print $2 "," $6}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 )
+          echo "RUN_STATUS $RUN_STATUS"
+          export RUN_HOURS=$(grid status ${{ secrets.RUN_NAME }} |  awk '{print $2 "," $8}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 | cut -d ':' -f 1 | cut -d '-' -f 2 )
+          echo "RunHOURS1: $RUN_HOURS"
+        id: run-status          
+      - name: print-run-status
+        run: |
+          echo "Run status : $RUN_STATUS"
+      - name: print-run-duration
+        run: |
+          echo "Run duration : $RUN_HOURS"
+      - name: delete-long-running-run
+        run: |
+          if [[ $RUN_STATUS="running" ]]; then
+             echo "Run is not running"
+          elif [[ $RUN_HOURS="${{ secrets.RUN_DURATION }}" ]]; then
+            echo "Run duration has exceeded crossed threhold: ${RUN_DURATION} Run is being Stopped"
+            # grid stop run ${{ secrets.RUN_NAME }}
+          fi 
+      - id: grid-status
+        uses: gridai-actions/gridai-status@v0
+        with:
+          obj-type: run
+          obj-id: ${run_name}
