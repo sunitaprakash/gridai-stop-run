@@ -3,7 +3,7 @@ on:
   schedule:
     # Runs "at 10pm" (see https://crontab.guru)
     # Please remove the # to activate the cron
-   - cron: '*/30 * * * *'
+   #- cron: '*/30 * * * *'
 jobs:
   gridai-actions:
     runs-on: ubuntu-latest
