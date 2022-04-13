@@ -14,7 +14,7 @@ To stop a Run in cron fashion. Below is stop-run.yml.
 name: 'Grid.ai Stop Run'
 on:
    schedule:
-     # Runs "at 10pm" (see https://crontab.guru)
+     # Runs "every 30 mins" (see https://crontab.guru)
      - cron: '*/30 * * * *'
 jobs:
   gridai-actions:
@@ -39,7 +39,7 @@ jobs:
              echo "Run is not running"
           elif [ "$RUN_HOURS" -gt "${{ secrets.RUN_DURATION }}" ]
           then
-            echo "Run duration has exceeded crossed threhold: ${RUN_DURATION} Run is being Stopped"
+            echo "Run duration has exceeded crossed threshold: ${RUN_DURATION} Run is being Stopped"
             grid stop run ${{ secrets.RUN_NAME }}
           fi
         shell: bash
