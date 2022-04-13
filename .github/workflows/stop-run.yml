@@ -27,7 +27,7 @@ jobs:
           grid status
           export RUN_STATUS=$(grid status ${{ secrets.RUN_NAME }} |  awk '{print $2 "," $6}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 )
           echo "RUN_STATUS $RUN_STATUS"
-          export RUN_HOURS=$(grid status ${{ secrets.RUN_NAME }} |  awk '{print $2 "," $10}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 | cut -d ':' -f 1 | cut -d '-' -f 2 )
+          export RUN_HOURS=$(grid status ${{ secrets.RUN_NAME }} |  awk '{print $2 "," $10}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 | cut -d ':' -f 2 | cut -d '-' -f 2 )
           echo "RunHOURS1: $RUN_HOURS"
           if [ "$RUN_STATUS" != "running" ]
           then
