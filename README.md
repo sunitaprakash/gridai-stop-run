@@ -5,7 +5,7 @@ This action performs the following:
 - Install python 3.8
 - Run pip install lightning-grid
 - Run grid login --username xxx -key xxx
-- Pauses a session based on what you define as GitHub's SESSION_NAME secret
+- Delete a Run that been running for X run of hours. Run name and Run Duration is based on what you define as GitHub's RUN_NAME and RUN_DURATION secret
 
 # Usage
 To stop a Run in cron fashion. Below is stop-run.yml. 
