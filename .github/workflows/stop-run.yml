@@ -20,9 +20,9 @@ jobs:
         with:
           gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai-key: ${{ secrets.GRIDAI_KEY }}   
-          MAX_TERM_COLS: 512
       - name: get-run-status
         run: |
+          MAX_TERM_COLS=512
           export COLUMNS=$MAX_TERM_COLS
           # run name is truncated within github action due to screen size.  make it short
           export RUN_STATUS=$(grid status ${{  secrets.RUN_NAME }} |  awk '{print $2 "," $6}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 )
