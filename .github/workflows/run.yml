@@ -5,6 +5,9 @@ on:
       run_name:
         required: true
         type: string
+      run_time:
+        required: true
+        type: int
   # schedule:
     # Runs "at 10pm" (see https://crontab.guru)
     # Please remove the # to activate the cron
@@ -25,16 +28,16 @@ jobs:
           export COLUMNS=512
           # run name is truncated within github action due to screen size.  make it short
           grid status
-          export RUN_STATUS=$(grid status ${{  secrets.RUN_NAME }} |  awk '{print $2 "," $6}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 )
+          export RUN_STATUS=$(grid status ${{ github.event.inputs.run_name }} |  awk '{print $2 "," $6}' | grep ${{ github.event.inputs.run_name }} | cut -d ',' -f 2 )
           echo "RUN_STATUS $RUN_STATUS"
-          export RUN_HOURS=$(grid status ${{ secrets.RUN_NAME }} |  awk '{print $2 "," $10}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 | cut -d ':' -f 1 | cut -d '-' -f 2 )
+          export RUN_HOURS=$(grid status ${{ github.event.inputs.run_name }} |  awk '{print $2 "," $10}' | grep ${{ github.event.inputs.run_name }} | cut -d ',' -f 2 | cut -d ':' -f 1 | cut -d '-' -f 2 )
           echo "RunHOURS1: $RUN_HOURS"
           if [ "$RUN_STATUS" != "running" ]
           then
              echo "Run is not running"
-          elif [ "$RUN_HOURS" > "${{ secrets.RUN_DURATION }}" ]
+          elif [ "$RUN_HOURS" > "${{ github.event.inputs.run_time }}" ]
           then
-            echo "Run duration has exceeded crossed threhold: ${RUN_DURATION} Run is being Stopped"
-            grid stop run ${{ secrets.RUN_NAME }}
+            echo "Run duration has exceeded crossed threhold: {{ github.event.inputs.run_time }} Run is being Stopped"
+            grid stop run ${{ github.event.inputs.run_name }}
           fi
         shell: bash
