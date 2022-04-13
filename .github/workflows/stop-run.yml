@@ -1,16 +1,8 @@
 name: 'Grid.ai Stop Run'
 on:
-   workflow_dispatch:
-    inputs:
-      run_name:
-        required: true
-        type: string
-  # schedule:
-    # Runs "at 10pm" (see https://crontab.guru)
-    # Please remove the # to activate the cron
-   #- cron: '*/30 * * * *'
- 
-
+   schedule:
+     # Runs "at 10pm" (see https://crontab.guru)
+     - cron: '*/30 * * * *'
 jobs:
   gridai-actions:
     runs-on: ubuntu-latest
