@@ -1,9 +1,16 @@
 name: 'Grid.ai Stop Run'
 on:
-  schedule:
+   workflow_dispatch:
+    inputs:
+      run_name:
+        required: true
+        type: string
+  # schedule:
     # Runs "at 10pm" (see https://crontab.guru)
     # Please remove the # to activate the cron
    #- cron: '*/30 * * * *'
+ 
+
 jobs:
   gridai-actions:
     runs-on: ubuntu-latest
@@ -15,6 +22,7 @@ jobs:
           gridai-key: ${{ secrets.GRIDAI_KEY }}        
       - name: get-run-status
         run: |
+          export cols=$(tput 512)
           # run name is truncated within github action due to screen size.  make it short
           export RUN_STATUS=$(grid status ${{  secrets.RUN_NAME }} |  awk '{print $2 "," $6}' | grep ${{ secrets.RUN_NAME }} | cut -d ',' -f 2 )
           echo "RUN_STATUS $RUN_STATUS"
