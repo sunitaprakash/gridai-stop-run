@@ -52,6 +52,6 @@ The repository requires the below secrets. See the offical [documentation](https
 - GRIDAI_KEY 
 - GRIDAI_USERNAME 
 - RUN_NAME (Make sure there is no space after the Run name)
-- RUN_DURATION (Run duration should be 24 hour duration, 02 for 2 hours)
+- RUN_DURATION (For 2 hours enter 02)
 
 
